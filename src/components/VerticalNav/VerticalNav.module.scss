@@ -1,0 +1,9 @@
+.VerticalNav {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.navItem {
+  flex: 1;
+  text-align: center;
+}
