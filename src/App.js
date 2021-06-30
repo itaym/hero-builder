@@ -1,9 +1,10 @@
-import './App.css';
+import styles from './App.module.scss';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header" />
+    <div className={styles.globalApp}>
+      <div className={styles.globalContainer}>
+      </div>
     </div>
   );
 }
