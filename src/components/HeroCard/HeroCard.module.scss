@@ -1,10 +1,42 @@
 .HeroCard {
-  background-color: #f1f0ec;
+  background-color: #fff;
   margin: 0 auto;
-  min-height: 500px;
+  min-height: 380px;
   width: 300px;
 }
 .heroName {
   font-size: 24px;
   text-transform: uppercase;
+}
+.placeholder {
+  background: linear-gradient(-45deg, #aaa, #888, #999, #666, #777);
+  background-size: 400% 400%;
+  animation: gradient 2s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.emptyName {
+  @extend .placeholder;
+
+  border-radius: 24px;
+  height: 18px;
+  margin: 0 auto;
+  position: relative;
+  top: 8px;
+  width: 160px;
+}
+.heroImage {
+  height: 300px;
+  margin: 24px 0;
+  width: 300px;
 }
