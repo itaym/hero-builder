@@ -13,6 +13,10 @@ body,
 * {
   box-sizing: border-box;
 }
+div,
+h1, h2, h3, h4 {
+  // pointer-events:none;
+}
 
 .pageTitle {
   margin: 0 auto;
