@@ -3,13 +3,14 @@ import * as propTypes from "prop-types";
 import React from "react";
 import { NO_AVATAR_IMG_URL, NO_AVATAR_X_IMG_URL } from '../../constants'
 
-const HeroCard = ({ hero }) => {
+const HeroCard = ({ hero, onClick }) => {
     const onImageError = e => {
         e.target.src = NO_AVATAR_X_IMG_URL
     }
     return (
         <div
-            className={styles.HeroCard}>
+            className={styles.HeroCard}
+        onClick={onClick}>
             <span
                 className={styles.heroName}>{hero.name || <div className={styles.emptyName} />}</span>
             <img
@@ -29,5 +30,6 @@ HeroCard.propTypes = {
         }))
 
     }),
+    onClick: propTypes.func
 }
 export default React.memo(HeroCard)

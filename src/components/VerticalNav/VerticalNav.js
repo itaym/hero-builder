@@ -3,12 +3,12 @@ import React from "react"
 import classNames from "classnames"
 import styles from "./VerticalNav.module.scss"
 
-const VerticalNav = ({ data, active, selected }) => {
+const VerticalNav = ({ className, active, selected, children }) => {
 
     return (
         <div
-            className={styles.VerticalNav}>
-            {(data || []).map((navName, index) => {
+            className={classNames(styles.VerticalNav, className)}>
+            {(children || []).map((child, index) => {
                 const className = classNames(
                     styles.navItem,
                     index === selected ? styles.navSelected : '',
@@ -16,7 +16,7 @@ const VerticalNav = ({ data, active, selected }) => {
                 return (
                 <div
                     className={className}
-                    key={`nav_${index}`}>{navName}</div>
+                    key={`nav_${index}`}>{child}</div>
                 )
             })}
         </div>

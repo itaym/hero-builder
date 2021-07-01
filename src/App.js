@@ -12,7 +12,7 @@ const initialState = {
         { id: 0, name: '', skills: [], image: ''},
         { id: 1, name: '', skills: [], image: ''},
         { id: 2, name: '', skills: [], image: ''}],
-    selectedHero: null,
+    selectedHero: -1,
     currentStage: STAGE_HERO_SELECTION
 }
 
@@ -38,32 +38,40 @@ function App() {
             })
             .catch((e) => alert(e))
     }, [])
+    const onHeroClick = selectedHero => () => setState({...state, selectedHero})
+
     const { currentStage, heroes, selectedHero} = state
     const allStages = [STAGE_HERO_RESULT, STAGE_HERO_SELECTION, STAGE_SKILL_EDIT]
     const selectStage = [STAGE_HERO_SELECTION]
     return (
         <div className={styles.globalApp}>
             <div className={styles.globalContainer}>
-                <div>
-                    <VerticalNav
-                        active={selectedHero ? selectStage   : selectStage}
-                        data={navigationData}
-                        selected={currentStage} />
-                </div>
+                <VerticalNav
+                    active={selectedHero > -1 ? allStages   : selectStage}
+                    selected={currentStage}>
+                    <div>Class</div>
+                    <div>Skills</div>
+                    <div>Result</div>
+                </VerticalNav>
                 <div className={"pageTitle"}>
                     <h1>Create Your Hero!</h1>
                 </div>
-                <div className={styles.heroCardsHolder}>
-                    {heroes.map((hero)=>{
+                <VerticalNav
+                    active={new Array(heroes.length).fill(0).map((_, index) => index)}
+                    className={styles.heroCardsHolder}
+                    selected={selectedHero}>
+                    {heroes.map((hero, index) => {
                         return (
-                        <div
-                            className={styles.heroCardHolder}
-                            key={`hero_id_${hero.id}`}>
-                            <HeroCard hero={hero} />
-                        </div>
+                            <div
+                                className={styles.heroCardHolder}
+                                key={`hero_id_${hero.id}`}>
+                                <HeroCard
+                                    hero={hero}
+                                    onClick={onHeroClick(index)} />
+                            </div>
                         )
                     })}
-                </div>
+                </VerticalNav>
             </div>
         </div>
     );
