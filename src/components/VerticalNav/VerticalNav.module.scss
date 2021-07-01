@@ -4,6 +4,27 @@
   width: 100%;
 }
 .navItem {
+  cursor: pointer;
   flex: 1;
+  position: relative;
   text-align: center;
+}
+.navItemDisabled {
+  cursor: default;
+  opacity: 0.5;
+}
+.navSelected {
+  &::before {
+    content: ".";
+    border-bottom: 4px blue inset;
+    border-radius: 4px;
+    position: absolute;
+    font-size: 63px;
+    line-height: 43px;
+    left: 4vw;
+    right: 4vw;
+    bottom: -15px;
+  }
+  color: blue;
+  cursor: default;
 }

@@ -5,7 +5,7 @@
 .globalContainer {
   display: flex;
   flex-direction: column;
-  padding: 6vw;
+  padding: 4vw 4vw 1vw 4vw;
 }
 .heroCardsHolder {
   display: flex;
@@ -15,7 +15,7 @@
 }
 .heroCardHolder {
   flex: 1;
-  margin: 10px 0;
+  margin: 0 0 10px;
   text-align: center;
 }
 

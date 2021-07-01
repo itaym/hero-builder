@@ -3,18 +3,26 @@ import React from "react"
 import classNames from "classnames"
 import styles from "./VerticalNav.module.scss"
 
-const VerticalNav = (props) => {
+const VerticalNav = ({ data, active, selected }) => {
 
     return (
         <div
-            className={classNames(styles.VerticalNav)}>
-            <div className={styles.navItem}>first</div>
-            <div className={styles.navItem}>second</div>
-            <div className={styles.navItem}>third</div>
+            className={styles.VerticalNav}>
+            {(data || []).map((navName, index) => {
+                const className = classNames(
+                    styles.navItem,
+                    index === selected ? styles.navSelected : '',
+                    !active.includes(index) ? styles.navItemDisabled: '')
+                return (
+                <div
+                    className={className}
+                    key={`nav_${index}`}>{navName}</div>
+                )
+            })}
         </div>
     )
 }
 VerticalNav.propTypes = {
-    className: propTypes.string,
+    data: propTypes.arrayOf(propTypes.string),
 }
 export default React.memo(VerticalNav)
