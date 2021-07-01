@@ -8,7 +8,9 @@ const initialState = {
     heroes: [
         { id: 0, name: '', skills: [], image: ''},
         { id: 1, name: '', skills: [], image: ''},
-        { id: 2, name: '', skills: [], image: ''}]
+        { id: 2, name: '', skills: [], image: ''}],
+    selectedHero: null,
+    currentStage: 7
 }
 
 function App() {

@@ -1,11 +1,11 @@
 import styles from "./HeroCard.module.scss";
 import * as propTypes from "prop-types";
 import React from "react";
-import { NO_AVATAR, NO_AVATAR_X } from '../../constants'
+import { NO_AVATAR_IMG_URL, NO_AVATAR_X_IMG_URL } from '../../constants'
 
 const HeroCard = ({ hero }) => {
     const onImageError = e => {
-        e.target.src = NO_AVATAR_X
+        e.target.src = NO_AVATAR_X_IMG_URL
     }
     return (
         <div
@@ -13,7 +13,7 @@ const HeroCard = ({ hero }) => {
             <span
                 className={styles.heroName}>{hero.name || <div className={styles.emptyName} />}</span>
             <img
-                className={styles.heroImage} alt={hero.name} src={hero.image || NO_AVATAR}
+                className={styles.heroImage} alt={hero.name} src={hero.image || NO_AVATAR_IMG_URL}
                 onError={onImageError}/>
         </div>
     )
