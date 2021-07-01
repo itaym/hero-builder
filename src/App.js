@@ -39,6 +39,10 @@ function App() {
             .catch((e) => alert(e))
     }, [])
     const onHeroClick = selectedHero => () => setState({...state, selectedHero})
+    const onNavClick = currentStage => {
+        if (!(currentStage === STAGE_HERO_SELECTION || state.selectedHero > -1)) return
+        return () => setState({...state, currentStage})
+    }
 
     const { currentStage, heroes, selectedHero} = state
     const allStages = [STAGE_HERO_RESULT, STAGE_HERO_SELECTION, STAGE_SKILL_EDIT]
@@ -49,9 +53,9 @@ function App() {
                 <VerticalNav
                     active={selectedHero > -1 ? allStages   : selectStage}
                     selected={currentStage}>
-                    <div>Class</div>
-                    <div>Skills</div>
-                    <div>Result</div>
+                    <div onClick={onNavClick(STAGE_HERO_SELECTION)}>Class</div>
+                    <div onClick={onNavClick(STAGE_SKILL_EDIT)}>Skills</div>
+                    <div onClick={onNavClick(STAGE_HERO_RESULT)}>Result</div>
                 </VerticalNav>
                 <div className={"pageTitle"}>
                     <h1>Create Your Hero!</h1>

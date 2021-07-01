@@ -3,7 +3,7 @@ import React from "react"
 import classNames from "classnames"
 import styles from "./VerticalNav.module.scss"
 
-const VerticalNav = ({ className, active, selected, children }) => {
+const VerticalNav = ({ active, className, children, selected }) => {
 
     return (
         <div
@@ -23,6 +23,8 @@ const VerticalNav = ({ className, active, selected, children }) => {
     )
 }
 VerticalNav.propTypes = {
-    data: propTypes.arrayOf(propTypes.string),
+    active: propTypes.arrayOf(propTypes.number),
+    className: propTypes.arrayOf(propTypes.string),
+    selected: propTypes.arrayOf(propTypes.number),
 }
 export default React.memo(VerticalNav)

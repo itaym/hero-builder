@@ -15,7 +15,7 @@ const HeroCard = ({ hero, onClick }) => {
                 className={styles.heroName}>{hero.name || <div className={styles.emptyName} />}</span>
             <img
                 className={styles.heroImage} alt={hero.name} src={hero.image || NO_AVATAR_IMG_URL}
-                onError={onImageError}/>
+                onError={onImageError} />
         </div>
     )
 }

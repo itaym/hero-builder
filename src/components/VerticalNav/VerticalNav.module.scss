@@ -5,12 +5,12 @@
   width: 100%;
 }
 .navItem {
-  min-width: 240px;
-  position: relative;
-  text-align: center;
-  > * {
-    cursor: pointer;
-  }
+     min-width: 240px;
+     position: relative;
+     text-align: center;
+     > * {
+       cursor: pointer;
+     }
   &:hover {
     &::after {
       border-bottom: 4px blue inset;
@@ -23,6 +23,7 @@
       position: absolute;
       right: 2vw;
       opacity: 0.25;
+      z-index: -1;
     }
   }
 }
@@ -53,5 +54,10 @@
   color: blue;
     > *  {
       cursor: default;
+  }
+}
+@media (max-width: 768px) {
+  .navItem {
+    min-width: 120px;
   }
 }
