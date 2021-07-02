@@ -1,0 +1,18 @@
+.heroCardsHolder {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.heroCardHolder {
+  flex: 1;
+  margin: 24px 0 0;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .heroCardsHolder {
+    display: flex;
+    flex-direction: column;
+  }
+}

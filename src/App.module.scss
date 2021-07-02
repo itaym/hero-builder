@@ -1,29 +1,5 @@
-.globalApp {
-  min-height: 100vh;
-  min-width: 100vw;
-}
 .globalContainer {
   display: flex;
   flex-direction: column;
-  padding: 4vw 4vw 1vw 4vw;
-}
-.heroCardsHolder {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-}
-.heroCardHolder {
-  flex: 1;
-  margin: 24px 0 0;
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  .globalContainer {
-  }
-  .heroCardsHolder {
-    display: flex;
-    flex-direction: column;
-  }
+  padding: 2vw 4vw 1vw 4vw;
 }

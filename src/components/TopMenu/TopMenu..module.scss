@@ -1,10 +1,7 @@
 .HeroCard {
-  box-shadow: 1px 1px 20px 2px rgba(192,192,192,0.75);
+  background-color: #fff;
   margin: 0 auto;
   width: 240px;
-  &:hover {
-    box-shadow: 1px 1px 20px 2px rgba(128,128,128,0.75);
-  }
 }
 .heroName {
   font-size: 24px;
@@ -12,7 +9,7 @@
 }
 .placeholder {
   background: linear-gradient(-45deg, #aaa, #888, #999, #666, #777);
-  background-size: 800% 200%;
+  background-size: 400% 400%;
   animation: gradient 1s ease infinite;
 }
 

@@ -1,25 +1,38 @@
-import HeroCard from "./components/HeroCard"
-import VerticalNav from "./components/VerticalNav"
-import styles from './App.module.scss'
-import {API_URL, STAGE_HERO_RESULT, STAGE_HERO_SELECTION, STAGE_SKILL_EDIT} from './constants'
-import { useEffect, useState } from "react"
+import PageSelection from './components/PageSelection'
+import PageSkills from './components/PageSkills'
+import { dispatcher } from 'react-dispatch'
+import React, { useEffect, useCallback, useState } from 'react'
+import TopMenu from './components/TopMenu'
+import {
+    API_URL,
+    EVENT_HERO_CLICK, EVENT_NAV_CLICK, STAGE_HERO_RESULT,
+    STAGE_HERO_SELECTION, STAGE_SKILL_EDIT
+} from './constants'
+import styles from './App.module.scss';
 
-const navigationData = [
-    'Class', 'Skills', 'Results'
-]
+
+const PagesMap = {
+    [STAGE_HERO_SELECTION] : PageSelection,
+    [STAGE_SKILL_EDIT] : PageSkills,
+    [STAGE_HERO_RESULT] : PageSelection,
+}
 const initialState = {
     heroes: [
         { id: 0, name: '', skills: [], image: ''},
         { id: 1, name: '', skills: [], image: ''},
         { id: 2, name: '', skills: [], image: ''}],
-    selectedHero: -1,
+    selectedHero: null,
     currentStage: STAGE_HERO_SELECTION
 }
 
 function App() {
     const [state, setState] = useState(initialState)
 
-    useEffect(() => {
+    const fetchData = useCallback(() => {
+        /**
+         No need to add the 'state' to the dependency array because this function is called only once
+         after the component is mounted, there for the state here is only the ORIGINAL one.
+         * */
         const getHeroes = async () => {
             const response = await fetch(`${API_URL}/heroes`)
             return (await response.json()).heroes
@@ -34,49 +47,50 @@ function App() {
                     })
                 })
                 // Simulate delay
-                setTimeout(setState,1000, {...state, heroes})
+                setTimeout(setState,2000, {...state, heroes})
             })
             .catch((e) => alert(e))
     }, [])
-    const onHeroClick = selectedHero => () => setState({...state, selectedHero})
-    const onNavClick = currentStage => {
-        if (!(currentStage === STAGE_HERO_SELECTION || state.selectedHero > -1)) return
-        return () => setState({...state, currentStage})
-    }
+
+    /**
+     Using two useEffect function. The first one will operate only ONCE and it's purpose is to fetch the data
+     only once. That's why it has a dependency of an empty array. No dependency at all will cause it to operate
+     after each render. The second useEffect function purpose is to initiate the dispatcher and it SHOULD
+     operate after each change to the state after setState is called.
+     * */
+    useEffect(() => {
+        // Start fetching data
+        fetchData();
+    }, [])
+
+    useEffect(() => {
+        // Handle cross components events
+        const onHeroClickEvent = heroIndex =>  setState({...state, selectedHero: state.heroes[heroIndex]})
+        const onNavClickEvent = currentStage => setState({...state, currentStage})
+
+        dispatcher.on(EVENT_HERO_CLICK, onHeroClickEvent);
+        dispatcher.on(EVENT_NAV_CLICK, onNavClickEvent);
+        return () => {
+            dispatcher.off(EVENT_HERO_CLICK)
+            dispatcher.off(EVENT_NAV_CLICK)
+        }
+    }, [state])
 
     const { currentStage, heroes, selectedHero} = state
+    const StagePage = PagesMap[currentStage]
+
     const allStages = [STAGE_HERO_RESULT, STAGE_HERO_SELECTION, STAGE_SKILL_EDIT]
-    const selectStage = [STAGE_HERO_SELECTION]
+    const selectionStage = [STAGE_HERO_SELECTION]
+
     return (
-        <div className={styles.globalApp}>
-            <div className={styles.globalContainer}>
-                <VerticalNav
-                    active={selectedHero > -1 ? allStages   : selectStage}
-                    selected={currentStage}>
-                    <div onClick={onNavClick(STAGE_HERO_SELECTION)}>Class</div>
-                    <div onClick={onNavClick(STAGE_SKILL_EDIT)}>Skills</div>
-                    <div onClick={onNavClick(STAGE_HERO_RESULT)}>Result</div>
-                </VerticalNav>
-                <div className={"pageTitle"}>
-                    <h1>Create Your Hero!</h1>
-                </div>
-                <VerticalNav
-                    active={new Array(heroes.length).fill(0).map((_, index) => index)}
-                    className={styles.heroCardsHolder}
-                    selected={selectedHero}>
-                    {heroes.map((hero, index) => {
-                        return (
-                            <div
-                                className={styles.heroCardHolder}
-                                key={`hero_id_${hero.id}`}>
-                                <HeroCard
-                                    hero={hero}
-                                    onClick={onHeroClick(index)} />
-                            </div>
-                        )
-                    })}
-                </VerticalNav>
-            </div>
+        <div className={styles.globalContainer}>
+            <TopMenu
+                activeList={selectedHero ? allStages : selectionStage}
+                currentSelected={currentStage} />
+            <StagePage
+                heroes={heroes}
+                currentStage={currentStage}
+                selectedHero={selectedHero} />
         </div>
     );
 }

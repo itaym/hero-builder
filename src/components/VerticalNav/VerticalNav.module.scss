@@ -11,19 +11,39 @@
      > * {
        cursor: pointer;
      }
+  &::before {
+    border-bottom: 4px blue inset;
+    border-radius: 4px;
+    bottom: -15px;
+    color: blue;
+    content: ".";
+    font-size: 63px;
+    left: 2vw;
+    line-height: 43px;
+    opacity: 0;
+    position: absolute;
+    right: 2vw;
+    transition: all 1s;
+    z-index: -1;
+  }
+  &::after {
+    border-bottom: 4px blue inset;
+    border-radius: 4px;
+    bottom: -15px;
+    color: blue;
+    content: ".";
+    font-size: 63px;
+    left: 2vw;
+    line-height: 43px;
+    position: absolute;
+    right: 2vw;
+    opacity: 0;
+    transition: all 1s;
+    z-index: -1;
+  }
   &:hover {
     &::after {
-      border-bottom: 4px blue inset;
-      border-radius: 4px;
-      bottom: -15px;
-      content: ".";
-      font-size: 63px;
-      left: 2vw;
-      line-height: 43px;
-      position: absolute;
-      right: 2vw;
       opacity: 0.25;
-      z-index: -1;
     }
   }
 }
@@ -41,18 +61,10 @@
 }
 .navSelected {
   &::before {
-    border-bottom: 4px blue inset;
-    border-radius: 4px;
-    bottom: -15px;
-    content: ".";
-    font-size: 63px;
-    left: 2vw;
-    line-height: 43px;
-    position: absolute;
-    right: 2vw;
+    opacity: 1;
   }
   color: blue;
-    > *  {
+  > *  {
       cursor: default;
   }
 }
