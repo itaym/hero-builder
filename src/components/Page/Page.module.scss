@@ -1,9 +1,9 @@
 .Page {
-  height: 100%;
-  width: 100%;
+  min-height: 92vh;
 }
 .pageContainer {
   display: flex;
   flex-direction: column;
+  min-height: 92vh;
   padding: 2vw 0 0;
 }

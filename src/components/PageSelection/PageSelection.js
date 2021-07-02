@@ -5,12 +5,14 @@ import Page from '../Page'
 import styles from './PageSelection.module.scss'
 import { dispatcher } from 'react-dispatch'
 import {
-    EVENT_HERO_CLICK,
-    STAGE_HERO_SELECTION} from '../../constants'
+    EVENT_HERO_CLICK, EVENT_NAV_CLICK,
+    STAGE_HERO_SELECTION, STAGE_SKILL_EDIT
+} from '../../constants'
 
-function PageSelection({ header, heroes, selectedHero }) {
+function PageSelection({ heroes, selectedHero }) {
 
     const selectedHeroIndex = heroes.findIndex(hero => hero === selectedHero)
+    const onButtonClick = useCallback(() => dispatcher.dispatch(EVENT_NAV_CLICK, STAGE_SKILL_EDIT), [])
     return (
         <Page
             currentStage={STAGE_HERO_SELECTION}
@@ -31,6 +33,11 @@ function PageSelection({ header, heroes, selectedHero }) {
                     )
                 })}
             </VerticalNav>
+            <div className="pageButton">
+                <button
+                    onClick={onButtonClick}
+                    disabled={selectedHero ? false : true}>Next</button>
+            </div>
         </Page>
     );
 }
