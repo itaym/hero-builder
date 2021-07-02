@@ -55,9 +55,27 @@ body {
     }
   }
 }
+
+.rangeslider-horizontal {
+  * {
+    transition: all 0s;
+  }
+  .rangeslider__fill {
+    background-color: #1e88e5!important;
+  }
+  .rangeslider__handle {
+
+  }
+}
+
 @media (max-width: 768px) {
   .pageButton {
+    position: sticky;
+    width: 100%;
+    border-top: 2px solid black;
+background-color: rgba(0, 0, 0, 0.05);
     margin: auto;
     padding: 32px;
+    text-align: center;
   }
 }

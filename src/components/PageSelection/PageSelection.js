@@ -5,7 +5,7 @@ import Page from '../Page'
 import styles from './PageSelection.module.scss'
 import { dispatcher } from 'react-dispatch'
 import {
-    EVENT_HERO_CLICK, EVENT_NAV_CLICK,
+    EVENT_NAV_CLICK,
     STAGE_HERO_SELECTION, STAGE_SKILL_EDIT
 } from '../../constants'
 
@@ -36,7 +36,7 @@ function PageSelection({ heroes, selectedHero }) {
             <div className="pageButton">
                 <button
                     onClick={onButtonClick}
-                    disabled={selectedHero ? false : true}>Next</button>
+                    disabled={!selectedHero}>Next</button>
             </div>
         </Page>
     );

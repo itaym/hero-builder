@@ -1,0 +1,19 @@
+.heroSkillsHolder {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: auto;
+  max-width: 75vw;
+  width: 100%;
+}
+.heroSkillRow {
+  flex: 1;
+  margin: 0;
+  text-align: left;
+}
+//
+@media (max-width: 768px) {
+  .heroSkillsHolder {
+    max-width: inherit;
+  }
+}

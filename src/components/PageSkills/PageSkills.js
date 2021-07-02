@@ -1,43 +1,108 @@
-import React, { useCallback } from 'react'
-import HeroCard from '../HeroCard'
-import VerticalNav from '../VerticalNav'
+import React, { useCallback, useState } from 'react'
+import 'react-rangeslider/lib/index.css';
 import Page from '../Page'
-import styles from './PageSelection.module.scss'
+import styles from './PageSkills.module.scss'
 import { dispatcher } from 'react-dispatch'
+import Slider from 'react-rangeslider'
 import {
-    EVENT_HERO_CLICK,
-    STAGE_SKILL_EDIT
+    EVENT_NAV_CLICK,
+    STAGE_HERO_SELECTION, STAGE_HERO_RESULT
 } from '../../constants'
 
-function PageSelection({ header, heroes, selectedHeroIndex }) {
+function PageSkills({ selectedHero }) {
+    const onButtonClick = useCallback(() => dispatcher.dispatch(EVENT_NAV_CLICK, STAGE_HERO_RESULT), [])
+    const [tmpSkills, setTmpSkills] = useState(selectedHero && selectedHero.skills.map(skill => skill.value))
+    const remainingPoints = 100 - tmpSkills.reduce((a, b)=> a + b, 0)
 
-    const onHeroClick = useCallback(selectedHeroIndex => () => dispatcher.dispatch(EVENT_HERO_CLICK, selectedHeroIndex), [])
+    const onChange = currentSkillIndex => (value) => {
 
+        const workArray = selectedHero.skills.map(skill => skill.value)
+        const ratioArray = workArray.map(skill => skill / 100)
+
+        workArray[currentSkillIndex] = value
+
+        let skillLoopIndex = 0
+        let totalScore = workArray.reduce((a, b)=> a + b, 0)
+
+        if (totalScore > 100) {
+            /**
+             Floating points in JS can give you hell:
+             */
+            while (totalScore > 100.00001) {
+                if (skillLoopIndex >= workArray.length) skillLoopIndex = 0;
+                if (skillLoopIndex !== currentSkillIndex && workArray[skillLoopIndex] > 0) {
+                    workArray[skillLoopIndex] -= ratioArray[skillLoopIndex]
+                    workArray[skillLoopIndex] = Math.max(workArray[skillLoopIndex], 0)
+                    totalScore -= ratioArray[skillLoopIndex]
+                }
+                skillLoopIndex++
+            }
+            workArray.forEach((value, index) => {
+                /**
+                 Rounding the results can end it three ways:
+                 1. Total score is 100 - cool.
+                 2. Total score is less from 100 (By max no. of skills) - need to handle
+                 3. Total score is greater from 100 (Same as no. 2)
+                 */
+                workArray[index] = Math.round(value)
+            })
+            totalScore = workArray.reduce((a, b) => a + b, 0)
+
+            /**
+             Handling difference from 100 at this point may result in ratio difference
+             */
+            while (totalScore > 100) {
+                if (skillLoopIndex >= workArray.length) skillLoopIndex = 0;
+                if (workArray[skillLoopIndex] > 0) {
+                    workArray[skillLoopIndex]--
+                    totalScore--
+                }
+                skillLoopIndex++
+            }
+            while (totalScore < 100) {
+                if (skillLoopIndex >= workArray.length) skillLoopIndex = 0;
+                if (workArray[skillLoopIndex] > 0) {
+                    workArray[skillLoopIndex]++
+                    totalScore++
+                }
+                skillLoopIndex++
+            }
+        }
+        setTmpSkills([...workArray])
+    }
+    const onChangeComplete = () => {
+        selectedHero.skills = selectedHero.skills.map((skill, index) => ({...skill, value:tmpSkills[index]}))
+    }
     return (
         <Page
-            header={header}
-            heroes={heroes}
-            currentStage={STAGE_SKILL_EDIT}
-            selectedHeroIndex={selectedHeroIndex}
-            title="Create Your Hero!">
-            <VerticalNav
-                activeList={new Array(heroes.length).fill(0).map((_, index) => index)}
-                className={styles.heroCardsHolder}
-                selected={selectedHeroIndex}>
-                {heroes.map((hero, index) => {
+            currentStage={STAGE_HERO_SELECTION}
+            title="Fine Tune Your Skills">
+            <div className={styles.heroSkillsHolder}>
+                <h2>Remaining Points: {remainingPoints}</h2>
+                {tmpSkills.map((skill, index) => {
                     return (
                         <div
-                            className={styles.heroCardHolder}
-                            key={`hero_id_${hero.id}`}>
-                            <HeroCard
-                                hero={hero}
-                                onClick={onHeroClick(index)} />
+                            className={styles.heroSkillRow}
+                            key={`skill_${selectedHero.skills[index].name}`}>
+                            <h3>{selectedHero.skills[index].name}</h3>
+                            <Slider
+                                min={0}
+                                max={100}
+                                orientation="horizontal"
+                                color="red"
+                                onChangeComplete={onChangeComplete}
+                                onChange={onChange(index)}
+                                defaultValue={skill}
+                                value={skill} />
                         </div>
                     )
                 })}
-            </VerticalNav>
+            </div>
+            <div className="pageButton">
+                <button onClick={onButtonClick}>Finish</button>
+            </div>
         </Page>
     );
 }
 
-export default React.memo(PageSelection);
+export default React.memo(PageSkills);
