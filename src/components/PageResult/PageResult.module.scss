@@ -1,0 +1,20 @@
+.heroHolder {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+}
+.heroDetails {
+  margin: 0 0 0 24px;
+}
+.heroName {
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .heroHolder {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}

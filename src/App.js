@@ -1,4 +1,5 @@
 import PageSelection from './components/PageSelection'
+import PageResult from './components/PageResult'
 import PageSkills from './components/PageSkills'
 import { dispatcher } from 'react-dispatch'
 import React, { useEffect, useCallback, useState } from 'react'
@@ -14,7 +15,7 @@ import styles from './App.module.scss';
 const PagesMap = {
     [STAGE_HERO_SELECTION] : PageSelection,
     [STAGE_SKILL_EDIT] : PageSkills,
-    [STAGE_HERO_RESULT] : PageSelection,
+    [STAGE_HERO_RESULT] : PageResult,
 }
 const initialState = {
     heroes: [
