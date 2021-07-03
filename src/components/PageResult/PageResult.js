@@ -1,18 +1,10 @@
-import React, { useCallback } from 'react'
-import HeroCard from '../HeroCard'
-import VerticalNav from '../VerticalNav'
+import Image from '../Image/Image'
 import Page from '../Page'
+import React, { useCallback } from 'react'
 import styles from './PageResult.module.scss'
-import { dispatcher } from 'react-dispatch'
-import {
-    EVENT_NAV_CLICK, NO_AVATAR_IMG_URL, NO_AVATAR_X_IMG_URL,
-    STAGE_HERO_SELECTION, STAGE_SKILL_EDIT
-} from '../../constants'
-import Slider from "react-rangeslider";
+import { STAGE_HERO_SELECTION, PROPTYPES_HERO } from '../../constants'
 
-function PageResult({ heroes, selectedHero }) {
-    const onImageError = e => e.target.src = NO_AVATAR_X_IMG_URL
-    const selectedHeroIndex = heroes.findIndex(hero => hero === selectedHero)
+function PageResult({ selectedHero }) {
     const onButtonClick = useCallback(() => window.location.reload(), [])
     return (
         <Page
@@ -20,9 +12,8 @@ function PageResult({ heroes, selectedHero }) {
             title="Your Hero Is Ready!">
             <div
                 className={styles.heroHolder}>
-                <img
-                    className="" alt={selectedHero.name} src={selectedHero.image || NO_AVATAR_IMG_URL}
-                onError={onImageError} />
+                <Image
+                    alt={selectedHero.name} src={selectedHero.image}/>
                 <div className={styles.heroDetails}>
                     <h2 className={styles.heroName}>{selectedHero.name}</h2>
                     {selectedHero.skills.map((skill, index) => {
@@ -45,4 +36,7 @@ function PageResult({ heroes, selectedHero }) {
     );
 }
 
+PageResult.propTypes = {
+    selectedHero: PROPTYPES_HERO,
+}
 export default React.memo(PageResult);

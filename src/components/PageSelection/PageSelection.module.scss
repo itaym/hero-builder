@@ -1,3 +1,4 @@
+@import '../../scss/variables';
 .heroCardsHolder {
   display: flex;
   flex-direction: row;
@@ -6,7 +7,7 @@
 }
 .heroCardHolder {
   flex: 1;
-  margin: 24px 0 0;
+  margin: $margin-regular 0 0;
   text-align: center;
 }
 

@@ -4,12 +4,23 @@
   flex-wrap: wrap;
   margin: auto;
   max-width: 75vw;
+  position: relative;
   width: 100%;
 }
 .heroSkillRow {
   flex: 1;
   margin: 0;
   text-align: left;
+}
+.heroBackground {
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: -1;
 }
 //
 @media (max-width: 768px) {

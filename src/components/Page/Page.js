@@ -1,8 +1,8 @@
-import styles from './Page.module.scss'
 import React from 'react'
+import styles from './Page.module.scss'
+import * as propTypes from 'prop-types'
 
 function Page({ children, title }) {
-
     return (
         <div className={styles.Page}>
             <div className={styles.pageContainer}>
@@ -15,4 +15,7 @@ function Page({ children, title }) {
     );
 }
 
+Page.propTypes = {
+    title: propTypes.string,
+}
 export default React.memo(Page);

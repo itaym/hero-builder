@@ -1,3 +1,4 @@
+import * as propTypes from 'prop-types'
 import React, { useCallback } from 'react'
 import HeroCard from '../HeroCard'
 import VerticalNav from '../VerticalNav'
@@ -5,7 +6,7 @@ import Page from '../Page'
 import styles from './PageSelection.module.scss'
 import { dispatcher } from 'react-dispatch'
 import {
-    EVENT_NAV_CLICK,
+    EVENT_NAV_CLICK, PROPTYPES_HERO,
     STAGE_HERO_SELECTION, STAGE_SKILL_EDIT
 } from '../../constants'
 
@@ -42,4 +43,8 @@ function PageSelection({ heroes, selectedHero }) {
     );
 }
 
+PageSelection.propTypes = {
+    heroes: propTypes.arrayOf(PROPTYPES_HERO),
+    selectedHero: PROPTYPES_HERO,
+}
 export default React.memo(PageSelection);

@@ -1,13 +1,14 @@
-import React, { useCallback, useState } from 'react'
 import 'react-rangeslider/lib/index.css';
 import Page from '../Page'
+import React, { useCallback, useState } from 'react'
+import Slider from 'react-rangeslider'
 import styles from './PageSkills.module.scss'
 import { dispatcher } from 'react-dispatch'
-import Slider from 'react-rangeslider'
 import {
     EVENT_NAV_CLICK,
-    STAGE_HERO_SELECTION, STAGE_HERO_RESULT
+    STAGE_HERO_SELECTION, STAGE_HERO_RESULT, PROPTYPES_HERO
 } from '../../constants'
+import Image from "../Image/Image";
 
 function PageSkills({ selectedHero }) {
     const onButtonClick = useCallback(() => dispatcher.dispatch(EVENT_NAV_CLICK, STAGE_HERO_RESULT), [])
@@ -28,7 +29,7 @@ function PageSkills({ selectedHero }) {
             /**
              Floating points in JS can give you hell:
              */
-            while (totalScore > 100.00001) {
+            do {
                 if (skillLoopIndex >= workArray.length) skillLoopIndex = 0;
                 if (skillLoopIndex !== currentSkillIndex && workArray[skillLoopIndex] > 0) {
                     workArray[skillLoopIndex] -= ratioArray[skillLoopIndex]
@@ -36,7 +37,8 @@ function PageSkills({ selectedHero }) {
                     totalScore -= ratioArray[skillLoopIndex]
                 }
                 skillLoopIndex++
-            }
+            } while (totalScore > 100.00001)
+
             workArray.forEach((value, index) => {
                 /**
                  Rounding the results can end it three ways:
@@ -47,7 +49,6 @@ function PageSkills({ selectedHero }) {
                 workArray[index] = Math.round(value)
             })
             totalScore = workArray.reduce((a, b) => a + b, 0)
-
             /**
              Handling difference from 100 at this point may result in ratio difference
              */
@@ -77,7 +78,12 @@ function PageSkills({ selectedHero }) {
         <Page
             currentStage={STAGE_HERO_SELECTION}
             title="Fine Tune Your Skills">
-            <div className={styles.heroSkillsHolder}>
+            <div
+                className={styles.heroSkillsHolder}>
+                <Image
+                    className={styles.heroBackground}
+                    src={selectedHero.image}
+                    style={{ opacity: (100 - remainingPoints) / 100}} />
                 <h2>Remaining Points: {remainingPoints}</h2>
                 {tmpSkills.map((skill, index) => {
                     return (
@@ -105,4 +111,7 @@ function PageSkills({ selectedHero }) {
     );
 }
 
+PageSkills.propTypes = {
+    selectedHero: PROPTYPES_HERO,
+}
 export default React.memo(PageSkills);

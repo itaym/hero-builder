@@ -1,30 +1,36 @@
+@import "../../scss/variables";
 .HeroCard {
-  box-shadow: 1px 1px 20px 2px rgba(192,192,192,0.75);
+  box-shadow: $box-shadow-lighter;
   margin: 0 auto;
-  width: 240px;
+  width: $hero-card-width;
   &:hover {
-    box-shadow: 1px 1px 20px 2px rgba(128,128,128,0.75);
+    box-shadow: $box-shadow-darker;
   }
 }
 .heroName {
-  font-size: 24px;
+  font-size: $text-size-large;
   text-transform: uppercase;
 }
 .placeholder {
-  background: linear-gradient(-45deg, #aaa, #888, #999, #666, #777);
+  background: linear-gradient(-45deg,
+          $background-secondary,
+          darken($background-secondary, 10),
+          darken($background-secondary, 15),
+          lighten($background-secondary, 10),
+          lighten($background-secondary, 15));
   background-size: 800% 200%;
   animation: gradient 1s ease infinite;
 }
 
 @keyframes gradient {
   0% {
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
   50% {
     background-position: 100% 50%;
   }
   100% {
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
 }
 .emptyName {
@@ -37,7 +43,6 @@
   width: 160px;
 }
 .heroImage {
-  height: 240px;
-  margin: 24px 0;
-  width: 240px;
+  margin: $margin-regular 0;
+  width: $hero-card-width;
 }

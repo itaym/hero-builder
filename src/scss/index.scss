@@ -1,32 +1,30 @@
+@import "./variables";
 html,
 body,
 #root {
   min-height: 100vh;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: all 0s;
 }
 body {
-  background: linear-gradient(-45deg
-  , #fff, #feb, #edc, #dcb, #cba
-  , #cba, #dcb, #edc, #feb, #fff);
+  background: $background-primary;
   background-size: 200% 200%;
   animation: gradient 5s ease infinite;
+  color: $color-text-primary;
 }
 
 @keyframes gradient {
   0% {
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
   40% {
     background-position: 100% 50%;
   }
   100% {
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
 }
 * {
@@ -43,11 +41,11 @@ body {
   margin: auto 0 0 auto;
   padding: 32px;
   button {
-    background-color: #6558F5;
+    background-color: rgba($color-bg-primary, 0.5);
     border-radius: 12px;
-    border: 4px solid lightslategrey;
-    color: white;
-    font-size: 24px;
+    border: 4px solid lighten($color-bg-primary, 20%);
+    color: $color-text-white;
+    font-size: $text-size-large;
     height: 48px;
     min-width: 96px;
     &:disabled {
@@ -61,21 +59,17 @@ body {
     transition: all 0s;
   }
   .rangeslider__fill {
-    background-color: #1e88e5!important;
-  }
-  .rangeslider__handle {
-
+    background-color: $color-bg-primary!important;
   }
 }
 
 @media (max-width: 768px) {
   .pageButton {
-    position: sticky;
-    width: 100%;
-    border-top: 2px solid black;
-background-color: rgba(0, 0, 0, 0.05);
+    background-color: lighten($background-secondary, 35);
     margin: auto;
     padding: 32px;
+    position: sticky;
     text-align: center;
+    width: 100%;
   }
 }
