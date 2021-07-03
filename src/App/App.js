@@ -79,13 +79,18 @@ function App() {
     const { currentStage, heroes, selectedHero} = state
     const StagePage = PagesMap[currentStage]
 
-    const allStages = [STAGE_HERO_RESULT, STAGE_HERO_SELECTION, STAGE_SKILL_EDIT]
-    const selectionStage = [STAGE_HERO_SELECTION]
+    const activeStages = [STAGE_HERO_SELECTION]
+    if (selectedHero) {
+        activeStages.push(STAGE_SKILL_EDIT)
+        if (selectedHero.skills.reduce((a, b) => ({ value: a.value + b.value}), { value: 0}).value === 100) {
+            activeStages.push(STAGE_HERO_RESULT)
+        }
+    }
 
     return (
         <div className={styles.globalContainer}>
             <TopMenu
-                activeList={selectedHero ? allStages : selectionStage}
+                activeList={activeStages}
                 currentSelected={currentStage} />
             <StagePage
                 heroes={heroes}

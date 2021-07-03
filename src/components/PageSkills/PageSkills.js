@@ -6,7 +6,7 @@ import styles from './PageSkills.module.scss'
 import { dispatcher } from 'react-dispatch'
 import {
     EVENT_NAV_CLICK,
-    STAGE_HERO_SELECTION, STAGE_HERO_RESULT, PROPTYPES_HERO
+    STAGE_HERO_SELECTION, STAGE_HERO_RESULT, PROPTYPES_HERO, STAGE_SKILL_EDIT
 } from '../../constants'
 import Image from "../Image/Image";
 
@@ -23,7 +23,7 @@ function PageSkills({ selectedHero }) {
         workArray[currentSkillIndex] = value
 
         let skillLoopIndex = 0
-        let totalScore = workArray.reduce((a, b)=> a + b, 0)
+        let totalScore = workArray.reduce((a, b) => a + b, 0)
 
         if (totalScore > 100) {
             /**
@@ -73,6 +73,8 @@ function PageSkills({ selectedHero }) {
     }
     const onChangeComplete = () => {
         selectedHero.skills = selectedHero.skills.map((skill, index) => ({...skill, value:tmpSkills[index]}))
+        //Refresh menu active items
+        dispatcher.dispatch(EVENT_NAV_CLICK, STAGE_SKILL_EDIT)
     }
     return (
         <Page
@@ -105,7 +107,9 @@ function PageSkills({ selectedHero }) {
                 })}
             </div>
             <div className="pageButton">
-                <button onClick={onButtonClick}>Finish</button>
+                <button
+                    disabled={remainingPoints !== 0}
+                    onClick={onButtonClick}>Finish</button>
             </div>
         </Page>
     );
